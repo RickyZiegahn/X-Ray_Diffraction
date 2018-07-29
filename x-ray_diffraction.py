@@ -1,12 +1,15 @@
-#Version 1.0 last updated 20-June-2018
-#https://github.com/RickyZiegahn/X-Ray_Diffraction
+'''
+Version 1.1 last updated 29-July-2018
+https://github.com/RickyZiegahn/X-Ray_Diffraction
+Made for McGill University under D.H. Ryan
+'''
 
 import time
 import serial
 from pyqtgraph.Qt import QtGui
 import pyqtgraph as pg
 
-ser = serial.Serial(port='COM3',baudrate=9600)
+ser = serial.Serial(port='COM3',baudrate=9600,timeout=10)
 factor = 400 # 400 steps per degree
 constant = 0 # 0 is a placeholder, to simplify things
 sample = '1'

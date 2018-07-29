@@ -1,5 +1,8 @@
-//Version 1.0 last updated 20-June-2018
-//https://github.com/RickyZiegahn/X-Ray_Diffraction
+/*
+ * Version 1.1 last updated 29-July-2018
+ * https://github.com/RickyZiegahn/X-Ray_Diffraction
+ * Made for McGill University under D.H. Ryan
+ */
 
 #define pulse_high 10
 #define pulse_rate 5
@@ -15,19 +18,19 @@ int motor = 0;
 int counter = 2; //pulses come into pin 2
 int counts = 0;
 int len = 1000;
-float current_degree = 0;
-float starting_degree = 0;
-float ending_degree = 0;
-float degree_increment = 0;
-float factor = 400;
-float constant = 0;
+double current_degree = 0;
+double starting_degree = 0;
+double ending_degree = 0;
+double degree_increment = 0;
+double factor = 400;
+double constant = 0;
 
-float degrees_to_steps(float deg) {
+double degrees_to_steps(float deg) {
   float temp_step = deg * factor + constant;
   return temp_step;
 }
 
-float steps_to_degrees(int steps) {
+double steps_to_degrees(int steps) {
   float temp_degree = (steps - constant)/factor;
   return temp_degree;
 }
@@ -62,7 +65,6 @@ void accept_parameters() {
 }
 
 void count() {
-  //Serial.println(); //reports zero unless this line is added
   int t1 = millis();
   int t2 = millis();
   int dt = 0;
@@ -150,7 +152,7 @@ void loop() {
     if (b == 1) {
       accept_parameters();
       //move to starting position
-      float fsteps = degrees_to_steps(starting_degree);
+      double fsteps = degrees_to_steps(starting_degree);
       drive(round(fsteps/2), 1);
       s_loc += round(fsteps/2);
       drive(round(fsteps), 2);
@@ -160,8 +162,8 @@ void loop() {
       
       //proceed to the end
       for (int i; i <= 999999999; i++) { //number is arbitrarily large
-        float wanted_degree = starting_degree + degree_increment * i;
-        float unrounded_steps = degrees_to_steps(wanted_degree);
+        double wanted_degree = starting_degree + degree_increment * i;
+        double unrounded_steps = degrees_to_steps(wanted_degree);
         int s_steps = round(unrounded_steps/2) - s_loc;
         int d_steps = round(unrounded_steps) - d_loc;
         drive(s_steps, 1);
